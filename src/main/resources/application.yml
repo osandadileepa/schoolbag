@@ -1,0 +1,12 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    rest:
+      base-path: /api
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+        
+logging:
+  path: logs

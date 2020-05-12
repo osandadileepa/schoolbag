@@ -1,0 +1,17 @@
+version: '3'
+volumes:
+  schoolbag:
+    driver: local
+services:
+  mysql:
+    image: "mysql:5.7.30"
+    volumes:
+      - schoolbag:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: school
+      MYSQL_USER: schoolbag
+      MYSQL_PASSWORD: schoolbag31234
+    command: --disable-partition-engine-check
+    ports:
+      - "3306:3306"
