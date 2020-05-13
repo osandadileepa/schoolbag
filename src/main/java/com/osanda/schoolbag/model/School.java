@@ -40,4 +40,6 @@ public class School extends BaseModel {
 	private String adPostcode;
 	private String adState;
 
+	private Boolean active = true;
+
 }
