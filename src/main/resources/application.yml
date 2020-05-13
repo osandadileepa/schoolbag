@@ -11,7 +11,7 @@ spring:
       repositories:
         bootstrap-mode: deferred
   datasource:
-    url: jdbc:mysql://localhost:3306/school?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/school_bag?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root
     dbcp2:
