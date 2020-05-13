@@ -6,6 +6,8 @@ import {School} from "../models/school";
 import {PageEvent} from "@angular/material/paginator";
 import {Page} from "../models/page";
 import {HomeService, SCHOOL_END_POINT} from "./home.service";
+import {Subscription} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -20,12 +22,14 @@ export class HomeComponent implements OnInit {
   public searchList: School[] = [];
   public schoolSearchControl = new FormControl();
 
+  private searchSubscription: Subscription;
+
   constructor(private dialog: MatDialog,
               private service: HomeService) { }
 
   ngOnInit() {
-
     this.getAllAvailableSchools();
+    this.getSchoolsByWord();
   }
 
 
@@ -58,8 +62,6 @@ export class HomeComponent implements OnInit {
 
     this.service.getAllSchools(page, size).subscribe( (response: any) =>{
 
-
-
       this.schoolList = <School[]>response._embedded[SCHOOL_END_POINT];
       this.page = response.page;
 
@@ -68,6 +70,17 @@ export class HomeComponent implements OnInit {
     });
 
   }// getAllAvailableSchools()
+
+
+  public getSchoolsByWord() {
+    this.searchSubscription = this.schoolSearchControl.valueChanges.pipe(debounceTime(600)).subscribe( result =>{
+      console.log('WORD ', result);
+      const word: string = result;
+      this.service.searchSchoolsByword(word).subscribe((data: School[]) =>{
+        this.searchList = data;
+      })
+    });
+  }// getSchoolsByWord()
 
   /***
    * get school list based on the page selection

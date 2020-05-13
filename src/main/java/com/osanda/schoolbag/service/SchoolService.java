@@ -24,13 +24,29 @@ public class SchoolService {
 			return new ArrayList<>();
 		}
 
-		List<School> nameList = this.schoolRepository.findByName(searchKeyword);
+		log.info("Searching for schools in key word : " + searchKeyword);
+
+		List<School> nameList = this.schoolRepository.findByNameContainsIgnoreCase(searchKeyword);
 
 		if (nameList == null) {
 
-			List<School> streetList = this.schoolRepository.findByAdStreet(searchKeyword);
+			List<School> streetList = this.schoolRepository.findByAdStreetContainsIgnoreCase(searchKeyword);
 
 			if (streetList == null) {
+
+				List<School> stateList = this.schoolRepository.findByAdStateContainsIgnoreCase(searchKeyword);
+
+				if (stateList == null) {
+
+					List<School> subrbrList = this.schoolRepository.findByAdSuburbContainsIgnoreCase(searchKeyword);
+
+					if (subrbrList != null) {
+						return subrbrList;
+					}
+
+				} else {
+					return stateList;
+				}
 
 			} else {
 				return streetList;

@@ -15,7 +15,7 @@ import {ApiInterceptorService} from "./modules/interceptors/api-interceptor.serv
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ApiInterceptorService, multi: true },],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ApiInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

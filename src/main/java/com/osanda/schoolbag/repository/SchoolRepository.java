@@ -10,12 +10,12 @@ import com.osanda.schoolbag.model.School;
 @RepositoryRestResource(exported = true)
 public interface SchoolRepository extends JpaRepository<School, Long> {
 
-	List<School> findByName(String name);
+	List<School> findByNameContainsIgnoreCase(String name);
 
-	List<School> findByAdStreet(String Street);
+	List<School> findByAdStreetContainsIgnoreCase(String Street);
 
-	List<School> findByAdState(String state);
+	List<School> findByAdStateContainsIgnoreCase(String state);
 
-	List<School> findByAdSuburb(String suburb);
+	List<School> findByAdSuburbContainsIgnoreCase(String suburb);
 
 }
