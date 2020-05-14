@@ -3,41 +3,41 @@
   <div fxLayout="row">
     <span fxFlex></span>
     <h1>Available School List </h1>
-
     <span fxFlex></span>
 
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <input type="text"
-               placeholder="Search for schools by name or address"
+               placeholder="Search for schools by name and address"
                matInput
                [formControl]="schoolSearchControl"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let school of searchList" [value]="school.name">
-            {{school.name}} - ({{school.adStreet}}, {{school.adSuburb}} , {{school.adState}})
+            {{school.name}} ({{school.adStreet}}, {{school.adSuburb}} , {{school.adState}})
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
     </form>
 
     <span fxFlex></span>
-    <button mat-raised-button class="add-school" (click)="openDialog()">  Add A School </button>
+    <button mat-raised-button class="add-school" (click)="openDialog()">  Add School </button>
     <span fxFlex></span>
   </div>
 
   <mat-divider></mat-divider>
 
-  <div fxFlex="100">
+  <div fxLayoutAlign="start start" fxLayout="column" fxFlex="70">
     <mat-list>
-      <mat-list-item *ngFor="let school of schoolList"> {{school.name}} - {{school.adSuburb}} </mat-list-item>
+      <mat-list-item *ngFor="let school of schoolList">
+        <span style="font-family: Arial;font-size: 24px;font-weight: bolder; color: darkorchid">{{school.name}}</span>
+        &nbsp;-&nbsp;<b> {{school.studentSize}} Students </b> &nbsp;({{school.adStreet}}, {{school.adSuburb}}, {{school.adState}}. {{school.adPostcode}}) </mat-list-item>
     </mat-list>
   </div>
 
   <mat-paginator [length]="page?.totalElements" [pageSize]="page?.size" [pageSizeOptions]="[10, 20, 50]"
                  (page)="onPageClick($event)">
   </mat-paginator>
-
 
 </div>
 

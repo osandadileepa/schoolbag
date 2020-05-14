@@ -1,18 +1,58 @@
 <div>
-  <p mat-dialog-title>Add a new School</p>
+  <h3>Add a New School</h3>
 </div>
 
 <div mat-dialog-content>
 
-<!--  <form [formGroup]="schoolFormGroup">
+  <form [formGroup]="schoolFormGroup">
 
-  </form>-->
+    <div fxLayoutAlign="start start" fxLayout="row wrap" fxFlex="100" fxLayoutGap="5vw">
+
+      <mat-form-field appearance="outline" fxFlex="40">
+        <mat-label>School Name</mat-label>
+        <input matInput type="text" placeholder="School Name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="20">
+        <mat-label>Number of Students</mat-label>
+        <input matInput type="number" [min]="0" placeholder="Number of Students" formControlName="studentSize">
+      </mat-form-field>
+
+      <span fxFlex="100">
+        <mat-label>Enter address relevant information below</mat-label>
+        <br/>
+        <br/>
+      </span>
+
+      <mat-form-field appearance="outline" fxFlex="40">
+        <mat-label>Street</mat-label>
+        <input matInput type="text" placeholder="Street" formControlName="adStreet">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="40">
+        <mat-label>Suburb</mat-label>
+        <input matInput type="text" placeholder="Suburb" formControlName="adSuburb">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="40">
+        <mat-label>Postcode</mat-label>
+        <input matInput type="text" placeholder="Postcode" formControlName="adPostcode">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="40">
+        <mat-label>State Name</mat-label>
+        <input matInput type="text" placeholder="State Name" formControlName="adState">
+      </mat-form-field>
+
+    </div>
+
+  </form>
 
 </div>
 
 
 <div mat-dialog-actions>
-  <button mat-flat-button color="primary" >Add Job</button>
+  <button mat-flat-button color="primary" (click)="saveSchool()" >Add Job</button>
   <span fxFlex></span>
   <button mat-flat-button color="warn" (click)="close()">Close</button>
 </div>

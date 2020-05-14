@@ -18,6 +18,15 @@ public class SchoolService {
 
 	private final SchoolRepository schoolRepository;
 
+	/***
+	 * search a school by search word entered and igoring the case based on that
+	 * word contain in school name or address
+	 * 
+	 * @author Osanda Wedamulla
+	 * 
+	 * @param searchKeyword
+	 * @return
+	 */
 	public List<School> getSchoolsByNameAndAddress(String searchKeyword) {
 
 		if (searchKeyword == null) {
@@ -28,15 +37,15 @@ public class SchoolService {
 
 		List<School> nameList = this.schoolRepository.findByNameContainsIgnoreCase(searchKeyword);
 
-		if (nameList == null) {
+		if (nameList == null || nameList.size() == 0) {
 
 			List<School> streetList = this.schoolRepository.findByAdStreetContainsIgnoreCase(searchKeyword);
 
-			if (streetList == null) {
+			if (streetList == null || streetList.size() == 0) {
 
 				List<School> stateList = this.schoolRepository.findByAdStateContainsIgnoreCase(searchKeyword);
 
-				if (stateList == null) {
+				if (stateList == null || stateList.size() == 0) {
 
 					List<School> subrbrList = this.schoolRepository.findByAdSuburbContainsIgnoreCase(searchKeyword);
 

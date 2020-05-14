@@ -24,6 +24,7 @@ export class HomeService {
   public getAllSchools(page: number, size: number) : Observable<any> {
 
     let params: HttpParams = new HttpParams();
+    params = params.append('sort', 'id,desc');
 
     if(page)
       params = params.append('page', page.toString());
@@ -35,6 +36,12 @@ export class HomeService {
   }// getAllSchools()
 
 
+  /**
+   * search school by entered word
+   *
+   * @author Osanda Wedamulla
+   * @param word
+   */
   public searchSchoolsByword(word: string) :  Observable<School[]> {
 
     let params: HttpParams = new HttpParams();
@@ -42,5 +49,17 @@ export class HomeService {
 
     return this.http.get<School[]>(SCHOOL_SEARCH_END_POINT, { params }).pipe(take(1));
   }// searchSchoolsByword()
+
+
+  /**
+   * save new school
+   *
+   * @author Osanda Wedamulla
+   * @param school
+   */
+  public saveNewSchool(school: School) : Observable<School> {
+
+    return this.http.post<School>(SCHOOL_END_POINT, school).pipe(take(1));
+  }// saveNewSchool ()
 
 }// HomeService {}

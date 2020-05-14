@@ -4,7 +4,8 @@ target/
 !**/src/main/**
 !**/src/test/**
 *.attach
-/logs
+logs
+src/main/resources/static/
 
 ### STS ###
 .apt_generated

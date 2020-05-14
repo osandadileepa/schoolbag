@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {AddSchoolComponent} from "../dialogs/add-school/add-school.component";
 import {FormControl} from "@angular/forms";
@@ -14,7 +14,7 @@ import {debounceTime} from "rxjs/operators";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   public page: Page;
 
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   public schoolSearchControl = new FormControl();
 
   private searchSubscription: Subscription;
+  private dialogSubscription: Subscription;
 
   constructor(private dialog: MatDialog,
               private service: HomeService) { }
@@ -32,7 +33,22 @@ export class HomeComponent implements OnInit {
     this.getSchoolsByWord();
   }
 
+  ngOnDestroy(): void {
 
+    if(this.searchSubscription)
+      this.searchSubscription.unsubscribe();
+
+    if(this.dialogSubscription)
+      this.dialogSubscription.unsubscribe();
+  }
+
+
+  /***
+   * open the dialog box to add new school
+   *
+   * @author Osanda Wedamulla
+   *
+   */
   public openDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -40,12 +56,10 @@ export class HomeComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = undefined;
-    dialogConfig.width = '1200px';
+    dialogConfig.width = '1000px';
 
-    this.dialog.open(AddSchoolComponent, dialogConfig).afterClosed().subscribe(value => {
-      if(value) {
-        console.log('On School add close');
-      }
+    this.dialogSubscription = this.dialog.open(AddSchoolComponent, dialogConfig).afterClosed().subscribe(value => {
+        this.getAllAvailableSchools();
     });
 
   }// openDialog()
@@ -64,17 +78,19 @@ export class HomeComponent implements OnInit {
 
       this.schoolList = <School[]>response._embedded[SCHOOL_END_POINT];
       this.page = response.page;
-
-      console.log('DATA', response._embedded);
-
     });
 
   }// getAllAvailableSchools()
 
 
+  /***
+   * search schools by name and address
+   *
+   * @author Osanda Wedamulla
+   *
+   */
   public getSchoolsByWord() {
-    this.searchSubscription = this.schoolSearchControl.valueChanges.pipe(debounceTime(600)).subscribe( result =>{
-      console.log('WORD ', result);
+    this.searchSubscription = this.schoolSearchControl.valueChanges.pipe(debounceTime(700)).subscribe( result =>{
       const word: string = result;
       this.service.searchSchoolsByword(word).subscribe((data: School[]) =>{
         this.searchList = data;

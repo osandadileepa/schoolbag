@@ -21,6 +21,14 @@ public class SchoolController {
 
 	private final SchoolService schoolService;
 
+	/**
+	 * search by any word and return the result set
+	 * 
+	 * @author Osanda Wedamulla
+	 * 
+	 * @param searchWord
+	 * @return
+	 */
 	@GetMapping(value = "school")
 	public ResponseEntity<?> searchSchoolsBySearchParams(@RequestParam(name = "criteria") String searchWord) {
 

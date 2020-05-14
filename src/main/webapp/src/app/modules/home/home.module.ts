@@ -18,6 +18,7 @@ import {AddSchoolComponent} from "../dialogs/add-school/add-school.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {HomeService} from "./home.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {HomeService} from "./home.service";
     MatDialogModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSnackBarModule
   ],
   entryComponents: [AddSchoolComponent],
   providers: [
