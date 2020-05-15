@@ -6,8 +6,9 @@ import {School} from "../models/school";
 import {PageEvent} from "@angular/material/paginator";
 import {Page} from "../models/page";
 import {HomeService, SCHOOL_END_POINT} from "./home.service";
-import {Subscription} from "rxjs";
-import {debounceTime} from "rxjs/operators";
+import {Subscription, throwError} from "rxjs";
+import {catchError, debounceTime} from "rxjs/operators";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
+    //unsubscribing all the subscription when component destroy
     if(this.searchSubscription)
       this.searchSubscription.unsubscribe();
 
@@ -74,8 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
    */
   public getAllAvailableSchools(page?: number, size?: number) {
 
-    this.service.getAllSchools(page, size).subscribe( (response: any) =>{
-
+    this.service.getAllSchools(page, size)
+      .pipe(catchError(this.handleError))
+      .subscribe( (response: any) =>{
       this.schoolList = <School[]>response._embedded[SCHOOL_END_POINT];
       this.page = response.page;
     });
@@ -107,5 +110,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   public onPageClick(event:PageEvent) {
     this.getAllAvailableSchools(event.pageIndex, event.pageSize)
   }// onPageClick()
+
+
+  /**
+   * handle error originating from external api call
+   *
+   * @author Osanda Wedamulla
+   * @param error
+   */
+  private handleError(error: HttpErrorResponse) {
+
+    let errorMessage = '';
+
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+
+    }
+
+    return throwError(errorMessage);
+  }// handleError()
 
 }// HomeComponent {}

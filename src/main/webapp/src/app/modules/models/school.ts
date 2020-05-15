@@ -1,3 +1,9 @@
+/**
+ * model to manage school details
+ *
+ * @author Osanda Wedamulla
+ */
+
 export class School {
 
   name: string;

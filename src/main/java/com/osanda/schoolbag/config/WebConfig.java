@@ -5,6 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+/**
+ * add cross origin for all the custom created end points
+ * 
+ * @author Osanda Wedamulla
+ *
+ */
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

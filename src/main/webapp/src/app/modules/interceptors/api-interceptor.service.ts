@@ -38,4 +38,5 @@ export class ApiInterceptorService implements HttpInterceptor {
 
     return next.handle(apiReq);
   } // intercept()
-} // class
+
+} // ApiInterceptorService {}

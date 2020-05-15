@@ -5,6 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
+/**
+ * add cross origin for spring data rest end points
+ * 
+ * @author Osanda Wedamulla
+ *
+ */
+
 @Configuration
 public class GlobalRepositoryRestConfigurer implements RepositoryRestConfigurer {
 

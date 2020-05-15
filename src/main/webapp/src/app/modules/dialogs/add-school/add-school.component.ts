@@ -4,6 +4,9 @@ import {MatDialogRef} from "@angular/material/dialog";
 import {HomeService} from "../../home/home.service";
 import {School} from "../../models/school";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {HttpErrorResponse} from "@angular/common/http";
+import {throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-school',
@@ -21,17 +24,22 @@ export class AddSchoolComponent implements OnInit {
 
     this.schoolFormGroup = this.fb.group({
       name: [null, Validators.required],
-      studentSize: [0, Validators.required],
-      adStreet: [null, Validators.required],
-      adSuburb: [null, Validators.required],
-      adPostcode: [null, Validators.required],
-      adState: [null, Validators.required],
+      studentSize: [0],
+      adStreet: [null],
+      adSuburb: [null],
+      adPostcode: [null],
+      adState: [null],
     });
   }
 
   ngOnInit() {
   }
 
+  /**
+   * close the dialog box
+   *
+   * @author Osanda Wedamulla
+   */
   public close() {
     this.dialogRef.close();
   }// close()
@@ -49,9 +57,9 @@ export class AddSchoolComponent implements OnInit {
 
     if(school.name) {
 
-      this.homeService.saveNewSchool(school).subscribe( response => {
-        console.log('restponse', response);
-
+      this.homeService.saveNewSchool(school)
+        .pipe(catchError(this.handleErrorCreatingSchool))
+        .subscribe( response => {
         if(response) {
           this.close();
           let message = 'New school created : ' +  response.name;
@@ -60,7 +68,6 @@ export class AddSchoolComponent implements OnInit {
             duration: 2000
           });
         }
-
       });
 
     } else {
@@ -70,5 +77,28 @@ export class AddSchoolComponent implements OnInit {
     }
 
   }// saveSchool()
+
+  /**
+   * catch error and add response when creating new school
+   *
+   * @author Osanda Wedamulla
+   * @param error
+   */
+  private handleErrorCreatingSchool(error: HttpErrorResponse) {
+
+    let errorMessage = '';
+
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+
+    }
+
+    return throwError(errorMessage);
+  }// handleErrorCreatingSchool()
 
 }// AddSchoolComponent {}
