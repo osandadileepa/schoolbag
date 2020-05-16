@@ -1,0 +1,32 @@
+version: "3"
+
+volumes:
+  schoolbag:
+    driver: local
+services:
+  mysql-service:
+    image: "mysql:5.7.30"
+    networks: 
+      - school-network
+    container_name: schoolbag-mysql
+    volumes:
+      - schoolbag:/var/lib/mysql
+    ports: 
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    command: --disable-partition-engine-check
+  web-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - school-network
+    depends_on:
+      - mysql-service
+
+networks:
+  school-network:
+    driver: bridge
