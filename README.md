@@ -1,27 +1,52 @@
 # Getting Started
 
-Test project for School Management System.
+Test project to add schools with name address and other information and search schools by name and address.
 
-### Reference Documentation
-For further reference, please consider the following sections:
+# Build and Deployement instruction
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.1.14.RELEASE/maven-plugin/)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#using-boot-devtools)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-developing-web-applications)
-* [Rest Repositories](https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#howto-use-exposing-spring-data-repositories-rest-endpoint)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-jpa-and-spring-data)
-* [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#production-ready)
+## Development Enviroment setup
 
-### Guides
-The following guides illustrate how to use some features concretely:
+Make sure following are met
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Accessing JPA Data with REST](https://spring.io/guides/gs/accessing-data-rest/)
-* [Accessing Neo4j Data with REST](https://spring.io/guides/gs/accessing-neo4j-data-rest/)
-* [Accessing MongoDB Data with REST](https://spring.io/guides/gs/accessing-mongodb-data-rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
+- JDK 1.8
+- Docker and Docker Compose
+- Node 12.13.1
+- Angular CLI 8.3.xxx
+- MySQL 5.7.xx
+
+
+## Mysql User credentions
+
+- Following username and password should include
+  username: root,
+  password: root
+- Mysql instance should be exposed in localhost in port 3306
+- jdbc:mysql://localhost:3306/
+
+
+## Build application binary
+
+In the project root directory execute the following bach script
+
+```bash
+./build.sh
+```
+
+## Start the application
+
+```bash
+java -jar -Dspring.profiles.active=dev target/schoolbag-0.0.1-SNAPSHOT.jar
+```
+
+After execting above command application is avialable at http://localhost:8080
+
+
+## To excute docker based containerized deployement
+
+- Run the docker-compose.yml file using the following command
+
+```bash
+docker-compose up --build
+```
+
+- After few munutes application is avilable at http://localhost:8080
