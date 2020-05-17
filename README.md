@@ -15,7 +15,7 @@ Make sure following are met
 - MySQL 5.7.xx
 
 
-## Mysql User credentions
+## Mysql User credentials
 
 - Following username and password should include
   username: root,
@@ -23,6 +23,20 @@ Make sure following are met
 - Mysql instance should be exposed in localhost in port 3306
 - jdbc:mysql://localhost:3306/
 
+## Appication source and development envioronment
+
+- Backend avialable at src/main/java
+- Frontend avialable at src/main/webapp
+- MySQL instance will be avilable by using docker-compose file at src/main/docker(command : docker-compose up)
+- Bankend will be avialable by using following command ant project root afert mysql instance is up
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+```
+- Frontend will be served at http://localhost:4200 by executing following command at src/main/webapp
+
+```bash
+ng serve
+```
 
 ## Build application binary
 
